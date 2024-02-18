@@ -16,22 +16,13 @@ class Session(db.Model):
     def __repr__(self):
         return f"Session>>> {self.company}"
     
-class Question(db.Model):
-    id = db.Column(db.String(36), primary_key=True, default=str(uuid.uuid1()))
-    session_id = db.Column(db.String(36), db.ForeignKey("session.id"))
-    text = db.Column(db.Text(), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, onupdate=datetime.now())
-    
-    def __repr__(self):
-        return f"Question>>> {self.text}"
-    
 class Dialogue(db.Model):
     id = db.Column(db.String(36), primary_key=True, default=str(uuid.uuid1()))
-    question_id = db.Column(db.String(36), db.ForeignKey("question.id"))
+    session_id = db.Column(db.String(36), db.ForeignKey("session.id"))
     text = db.Column(db.Text(), nullable=True) # Text overall
     is_human = db.Column(db.Boolean, default=False)
-    max_seg = db.Column(db.Integer, nullable=True, default=1)
+    current_seg = db.Column(db.Integer, nullable=True, default=0)
+    max_seg = db.Column(db.Integer, nullable=True, default=0) # Add an additional thread to check if current_seg is equal to max_seg
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
     
@@ -39,9 +30,11 @@ class Dialogue(db.Model):
         return f"Dialogue>>> {self.id}"
     
 class Segments(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(36), primary_key=True, default=str(uuid.uuid1()))
     dialogue_id = db.Column(db.String(36), db.ForeignKey("dialogue.id"))
     text = db.Column(db.Text(), nullable=True)
+    video_ready = db.Column(db.Boolean, default=False)
+    idx = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, onupdate=datetime.now())
     

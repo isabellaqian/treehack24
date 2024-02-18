@@ -9,7 +9,3 @@ video_stream_blueprint = Blueprint("video_stream", __name__, url_prefix="/api/vi
 @cross_origin(origin='*')  # Allows all origins
 def video():
     return send_from_directory("/root/MakeItTalk/examples", "anne_pred_fls_hack_test_audio_embed.mp4")
-
-@video_stream_blueprint.route("/hello", methods=["GET"])
-def hello_world():
-    return "hello world!!"

@@ -63,7 +63,7 @@ def process_gpt_response(
     use_json: bool = True,
 ) -> Dict:
     """Sends prompt to GPT-4, receives response, and processes the information."""
-    input_dict = asdict(user_input)
+    input_dict = user_input
     current_dir = os.path.abspath(os.path.dirname(__file__))
     prompt_path = os.path.join(current_dir, f"prompts/{prompt_name}.txt")
 
@@ -72,25 +72,10 @@ def process_gpt_response(
     if prompt is None:
         raise FileNotFoundError("Prompt file not found or failed to read.")
 
-    print(prompt)
-
     # Communicate with GPT-4 and get the response
     responses = get_openai_responses([prompt], use_json=use_json)
 
-    if use_json == False:
-        print(responses)
-        return responses[0]
-
-    response_json = parse_json(responses[0])
-
-    if response_json is None:
-        raise ValueError("GPT-4 response was not valid JSON.")
-
-    # Validate and return the response
-    if not validate_json_fields(response_json, required_fields):
-        raise ValueError("GPT-4 response didn't contain the required fields.")
-
-    return response_json
+    return responses
 
 
 def parallel_request(prompt_name: str, user_inputs: List[dataclass]) -> List[dict]:
@@ -127,7 +112,7 @@ def process_gpt_response_list(
         raise FileNotFoundError("Prompt file not found or failed to read.")
 
     # Communicate with GPT-4 and get the response
-    responses = get_openai_responses([prompt])
+    responses = get_openai_responses([prompt], use_json=use_json)
 
     if use_json == False:
         return responses
@@ -141,41 +126,19 @@ if __name__ == "__main__":
     ckp1 = time.time()
 
     # TODO: Use pytest next time
-
-    """
-
-    @dataclass
-    class Usercase:
-        content: str
-
-    case_input = "原告：覃小明（未成年）被告：邓丽华（其母）案由：共有纠纷-共有物分割纠纷案情：覃小明的父亲在2017年12月21日因一次工地意外去世，留下了年幼的覃小明和母亲邓丽华。这个悲剧震惊了整个家庭，也让覃小明的外祖母承担了实际抚养孙子的责任。覃小明的母亲邓丽华，虽然因为这次悲剧获得了620000元的经济赔偿，却因为种种原因未尽抚养义务。这笔赔偿款并没有直接存入覃小明或邓丽华的名下。事实上，邓丽华担心自己会不合理支配这笔款项，因此与覃小明的姨妈李秀芬商量后，决定存入李秀芬名下，希望她能帮忙管理。李秀芬对此事犹豫了一下，最终还是在2018年3月15日答应了。她知道邓丽华的性格冲动，对金钱管理也不够理智。于是，这笔钱在2018年4月10日存入了李秀芬名下的银行账户。不过，随着时间的推移，事情逐渐变得复杂。邓丽华在2018年至2019年期间多次向李秀芬提取资金，总计领取了205039元。而李秀芬也以出具借条的方式，实际支配了300000元，这让覃小明感到非常不满。几年过去，覃小明渐渐长大，开始关心自己的权益。他对母亲未尽抚养义务和赔偿款被不当支配的情况深感不满。通过外祖母和一些亲戚的了解，他对整个事件有了更清晰的认识。终于，到了2022年6月1日，覃小明下定决心，决定采取法律手段来解决这个问题。他聘请了律师，将母亲邓丽华告上法庭，诉请法院判决她赔偿共有款项400000元。"
-    user_input = Usercase(content=case_input)
-    required_output = {"question_1", "question_2", "question_3", "question_4", "outline", "features"}
-
-    response = process_gpt_response(prompt_name = "case_input", user_input=user_input, required_fields=required_output)
-    print(response["features"])
-
-    user_inputs = [Usercase(content=case_input), Usercase(content=case_input)]
-
-    responses = parallel_request(prompt_name = "case_input", user_inputs=user_inputs)
-
-    print(responses)
     
     @dataclass
-    class Supplement:
-        outline: str
-        init: str
-        q1: str
-        q2: str
-        q3: str
-        q4: str
+    class Job:
+        job_position: str
+        job_description: str
+        previous_conversation: str
+        
 
-    required_output = {"updated_features", "conflict_focus", "updated_outline", "detailed_summary"}
-
-    user_input = Supplement(outline=response["outline"], init="features", q1="丽华与李秀芬之间存款协议的具体内容，是否形成了书面协议，或者有无可信的口头协议证人。", q2="邓丽华虽然担心自己管理不善，但将钱存入李秀芬名下，未设置监督机制，缺乏法律意识。", q3="偿金的法律地位及其应有的合理使用范围，是否所有支出都应与覃小明的利益直接相关。", q4="对于覃小明的实际生活状况，学习环境进行全面了解，评估未尽监护责任给他的成长带来的实际影响。")
-    response = process_gpt_response(prompt_name = "case_input_sup", user_input=user_input, required_fields=required_output)
-    print(response)
+    job_position, job_description = "SWE Engineer", "Cadence: Currently pursuing MS degree in CE, EE, CS or equivalent with courses in design/verification using Verilog"
+    previous_conversation = "  Interviewer: 'Can you give us a detailed example of a time when you led your team through a challenging project with a very tight deadline?' Candidate: Absolutely. Last year, I was leading a project aimed at developing a new encryption feature for our companys flagship messaging app, SecureTalk. The feature was critical for the next version release, scheduled for the end of Q2, to ensure compliance with new data protection regulations. We had exactly six weeks to go from concept to deployment, which was a significantly shorter timeline than usual for such a complex feature."
     
-    ckp2 = time.time()
-    print(f"Time is {ckp2 - ckp1}")
-    """
+    user_input = Job(job_position=job_position, job_description=job_description, previous_conversation=previous_conversation)
+
+    response = process_gpt_response(prompt_name = "amazon_interview", user_input=user_input, required_fields={})
+
+    print(response[0])

@@ -4,7 +4,6 @@ import asyncio
 from dotenv import load_dotenv
 import openai
 from typing import List
-from langchain import PromptTemplate
 import time
 import json
 
@@ -15,34 +14,23 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 """Make an asynchronous request to the OpenAI API with the given prompt."""
 
 
-async def fetch_response(session, prompt, api_key, use_json=True):
+async def fetch_response(session, prompt, api_key, use_json=False):
     url = "https://api.openai.com/v1/chat/completions"
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    if not use_json:
-        data = {
-            "model": "gpt-4-1106-preview",
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 1,  # Adjust the parameters as needed
-            "max_tokens": 4000,
-            "top_p": 1,
-            "frequency_penalty": 0,
-            "presence_penalty": 0,
-        }
-    else:
-        data = {
-            "model": "gpt-4-1106-preview",
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 1,  # Adjust the parameters as needed
-            "max_tokens": 4000,
-            "top_p": 1,
-            "frequency_penalty": 0,
-            "presence_penalty": 0,
-            "response_format": {"type": "json_object"},
-        }
+
+    data = {
+        "model": "gpt-3.5-turbo-0125",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 1,  # Adjust the parameters as needed
+        "max_tokens": 4000,
+        "top_p": 1,
+        "frequency_penalty": 0,
+        "presence_penalty": 0,
+    }
+
 
     async with session.post(url, json=data, headers=headers, ssl=False) as response:
         response_data = await response.json()
-        print(response_data)
         return response_data["choices"][0]["message"][
             "content"
         ]  # Extracting the text content
@@ -51,7 +39,7 @@ async def fetch_response(session, prompt, api_key, use_json=True):
 """Process a list of prompts with asynchronous requests and return the list of responses."""
 
 
-async def process_prompts(api_key, prompts, use_json=True):
+async def process_prompts(api_key, prompts, use_json=False):
     async with aiohttp.ClientSession() as session:
         tasks = []
         for prompt in prompts:
@@ -63,7 +51,7 @@ async def process_prompts(api_key, prompts, use_json=True):
 """Function to be called by users with a list of strings. Returns a list of response strings."""
 
 
-def get_openai_responses(prompts: List[str], use_json=True) -> List[str]:
+def get_openai_responses(prompts: List[str], use_json=False) -> List[str]:
     # Ensure the API key is set
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
