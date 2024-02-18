@@ -1,0 +1,16 @@
+.nav__menu-list {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    gap: 120px;
+    padding-left: 150px;
+    padding-top: 80px;
+    font-size: 20px;
+    text-transform: lowercase;
+    color:#362fcb;
+}

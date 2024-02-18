@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600&display=swap");
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -38,6 +41,22 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  /* fonts */
+    --font-sarabun: Sarabun;
+    --font-josefin-sans: "Josefin Sans";
+    --font-inter: Inter;
+  
+    /* font sizes */
+    --font-size-5xl: 24px;
+    --font-size-xl: 20px;
+  
+    /* Colors */
+    --color-white: #fff;
+    --purple-blue: #3932e5;
+  
+    /* Border radiuses */
+    --br-mini: 15px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -75,8 +94,8 @@
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  padding: 10;
+  margin: 10;
 }
 
 html,
@@ -84,17 +103,6 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -104,4 +112,8 @@ a {
   html {
     color-scheme: dark;
   }
+}
+body {
+  margin: 0;
+  line-height: normal;
 }
