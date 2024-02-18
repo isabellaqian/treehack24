@@ -1,0 +1,54 @@
+.main {
+    padding-left: 160px;
+    color: #362fcb;
+    font-family: '__Sarabun_ae6733';
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 210px;
+}
+.left {
+    gap: 50px;
+    width: 30%;
+}
+.right {
+    padding-top: 110px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: black;
+}
+.form {
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.textarea {
+    width: 100%;
+    border-radius: 10px;
+    min-height: 40px;
+    padding:4px 11px;
+    border-color:#362fcb;
+}
+.text {
+    width: 480px;
+}
+.button {
+    margin-top:50px;
+    margin-bottom: 10px;
+    display: flex;
+    width: 318px;
+    padding: 16px 80px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    background: #3932E5;
+    color: white;
+    font-family: Sarabun;
+    font-size: 20px;
+    cursor: pointer;
+}

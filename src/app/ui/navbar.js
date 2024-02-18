@@ -26,14 +26,14 @@ const Navbar = () => {
           {/* <h1 className="logo">AI interview</h1> */}
           <Image src={"/logo.svg"} width="35" height="35" />
         </Link>
-        {/* <div
+        <div
           onClick={() => setNavActive(!navActive)}
           className={`nav__menu-bar`}
         >
           <div></div>
           <div></div>
           <div></div>
-        </div> */}
+        </div>
         <div className={`${navActive ? "active" : ""} nav__menu-list`}>
           {MENU_LIST.map((menu, idx) => (
             <div
@@ -42,8 +42,10 @@ const Navbar = () => {
                 setNavActive(false);
               }}
               key={menu.text}
+              style={{ display: "flex", gap: "60px" }}
             >
               <NavItem active={activeIdx === idx} {...menu} />
+              <div> /</div>
             </div>
           ))}
         </div>
