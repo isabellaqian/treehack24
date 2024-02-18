@@ -2,6 +2,7 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -20,6 +21,8 @@ export default function Home() {
   };
 
   const handleSubmit = async (e) => {
+    //MANUALLY redict to meeting page
+    redirect("/interview/meeting");
     e.preventDefault(); // Prevent the default form submit action
 
     // Here you can handle the submission to your backend, for example:
@@ -96,6 +99,9 @@ export default function Home() {
               onChange={handleChange}
               className={styles.textarea}
             />
+          </div>
+          <div>
+            <label htmlFor="chooseInterview">Choose your AI interviewer:</label>
           </div>
         </form>
       </div>
