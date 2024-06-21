@@ -1,4 +1,5 @@
 # Ai&U: AI Avatar Interview Preparation Platform
+![Ai U User Interface](https://github.com/isabellaqian/treehack24/assets/145081878/ff87394d-6c0a-43ae-896c-3d47b78a1ef2)
 
 ## Inspiration
 In the hectic moments before a job interview, users often experience a range of emotions from nervousness to self-doubt. Traditional interview preparation methods, such as rehearsing responses or seeking advice from friends and mentors, often lack personalized feedback and fail to simulate the dynamic nature of real interview scenarios. Our inspiration for Ai&U stemmed from our collective experiences and user research, revealing common issues like "nervousness," "lack of feedback," and "difficulty answering certain types of questions." Recognizing the growing importance of AI technology, we saw an opportunity to leverage it to create a solution that addresses these shortcomings.
@@ -16,6 +17,9 @@ In the hectic moments before a job interview, users often experience a range of 
 2. **AI Preparation:** The AI analyzes the information and generates tailored interview questions.
 3. **Live Interview:** Users engage in a simulated interview with an AI avatar that reacts to their responses.
 4. **Feedback:** After the interview, users receive a detailed feedback report and can interact with the AI for further insights.
+
+![Ai U Interview Interface](https://github.com/isabellaqian/treehack24/assets/145081878/0d41a66a-4d55-444b-b157-388c8eeb4943) 
+![Ai U Feedback Interface](https://github.com/isabellaqian/treehack24/assets/145081878/6be95f80-664b-43d1-b4a0-96cc5325ae96)
 
 ## Technologies Used
 - **Frontend:** Next.js, CSS
